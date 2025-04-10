@@ -3,7 +3,6 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Album de Figurinha</title>
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/jeromeetienne/ar.js@1.7.2/aframe/build/aframe-ar.min.js"></script>
@@ -12,13 +11,8 @@
 <body style="margin: 0px; overflow: hidden;">
 
     <!-- Botão para ativar/desativar o som -->
-    <button id="toggleSound" style="position: fixed; top: 10px; left: 10px; z-index: 9999; padding: 10px; font-size: 16px; display: none;">
+    <button id="toggleSound" style="position: fixed; top: 10px; left: 10px; z-index: 100; padding: 10px; font-size: 16px; display: none;">
         Ativar Som 🔊
-    </button>
-
-    <!-- Botão para recarregar a página -->
-    <button id="reloadPage" style="position: fixed; top: 10px; right: 10px; z-index: 9999; padding: 10px; font-size: 16px; background-color: #2196F3; color: white; border: none; border-radius: 5px;">
-        Recarregar 🔁
     </button>
 
     <a-scene vr-mode-ui="enabled: false;" embedded arjs="debugUIEnable: false;">
@@ -28,7 +22,7 @@
 
         <!-- Carrega o marcador personalizado -->
         <a-marker id="customMarker" type="pattern" url="https://linguanotto.github.io/projetosTECNOVIBE/assets/album.patt">
-            <a-video id="videoElement" rotation="-90 0 0" position="0 0 0" width="2.5" height="1.4" src="#videoAR"></a-video>
+            <a-video id="videoElement" rotation="-35 0 0" position="0 0.5 0" width="1.5" height="1" src="#videoAR"></a-video>
         </a-marker>
 
         <a-entity camera></a-entity>
@@ -39,7 +33,6 @@
             const video = document.getElementById("videoAR");
             const button = document.getElementById("toggleSound");
             const marker = document.getElementById("customMarker");
-            const reloadBtn = document.getElementById("reloadPage");
 
             // Inicia o vídeo apenas quando o marcador for detectado
             marker.addEventListener("markerFound", () => {
@@ -59,11 +52,6 @@
             button.addEventListener("click", () => {
                 video.muted = !video.muted;
                 button.textContent = video.muted ? "Ativar Som 🔊" : "Desativar Som 🔇";
-            });
-
-            // Recarregar página
-            reloadBtn.addEventListener("click", () => {
-                location.reload();
             });
         };
     </script>

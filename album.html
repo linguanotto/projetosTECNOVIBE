@@ -12,12 +12,12 @@
 <body style="margin: 0px; overflow: hidden;">
 
     <!-- Botão para ativar/desativar o som -->
-    <button id="toggleSound" style="position: fixed; top: 10px; left: 10px; z-index: 100; padding: 10px; font-size: 16px; display: none;">
+    <button id="toggleSound" style="position: fixed; top: 10px; left: 10px; z-index: 9999; padding: 10px; font-size: 16px; display: none;">
         Ativar Som 🔊
     </button>
 
     <!-- Botão para recarregar a página -->
-    <button id="reloadPage" style="position: fixed; top: 10px; right: 10px; z-index: 100; padding: 10px; font-size: 16px;">
+    <button id="reloadPage" style="position: fixed; top: 10px; right: 10px; z-index: 9999; padding: 10px; font-size: 16px; background-color: #2196F3; color: white; border: none; border-radius: 5px;">
         Recarregar 🔁
     </button>
 
@@ -28,7 +28,7 @@
 
         <!-- Carrega o marcador personalizado -->
         <a-marker id="customMarker" type="pattern" url="https://linguanotto.github.io/projetosTECNOVIBE/assets/album.patt">
-            <a-video id="videoElement" rotation="-35 0 0" position="0 0.5 0" width="1.5" height="1" src="#videoAR"></a-video>
+            <a-video id="videoElement" rotation="-90 0 0" position="0 0 0" width="2.5" height="1.4" src="#videoAR"></a-video>
         </a-marker>
 
         <a-entity camera></a-entity>

@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Mãos Que Falam</title>
+  <title>Álbum de Figurinha</title>
 
   <!-- A-Frame e AR.js -->
   <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
@@ -24,7 +24,7 @@
       display: none;
     }
 
-    /* Oculta mensagens não desejadas na tela */
+    /* Oculta mensagens estranhas do AR.js na tela */
     body > div:not([id]):not([class]) {
       display: none;
     }
@@ -47,8 +47,8 @@
       <a-video id="videoElement"
                autoplay
                rotation="-35 0 0"
-               position="0 0.5 0"
-               width="1.5" height="1"
+               position="0 1 0"
+               width="0.6" height="1.0"
                src="#videoAR">
       </a-video>
     </a-marker>
@@ -62,21 +62,21 @@
       const button = document.getElementById("toggleSound");
       const marker = document.getElementById("customMarker");
 
-      video.muted = true; // Garante que começa mutado
+      video.muted = true; // Começa mutado
 
-      // Quando o marcador é detectado
+      // Quando o marcador aparece
       marker.addEventListener("markerFound", () => {
         video.play();
         button.style.display = "block";
       });
 
-      // Quando o marcador é perdido
+      // Quando o marcador desaparece
       marker.addEventListener("markerLost", () => {
         video.pause();
         button.style.display = "none";
       });
 
-      // Alternar o som
+      // Alternar som
       button.addEventListener("click", () => {
         video.muted = !video.muted;
         button.textContent = video.muted ? "Ativar Som 🔊" : "Desativar Som 🔇";

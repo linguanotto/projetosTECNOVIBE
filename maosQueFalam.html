@@ -1,61 +1,88 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-    <meta charset="UTF-8">
-    <title>Album de Figurinha</title>
-    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/jeromeetienne/ar.js@1.7.2/aframe/build/aframe-ar.min.js"></script>
+  <meta charset="UTF-8">
+  <title>Mãos Que Falam</title>
+
+  <!-- A-Frame e AR.js -->
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/jeromeetienne/ar.js@1.7.2/aframe/build/aframe-ar.min.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+    }
+
+    #toggleSound {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      z-index: 100;
+      padding: 10px;
+      font-size: 16px;
+      display: none;
+    }
+
+    /* Oculta mensagens não desejadas na tela */
+    body > div:not([id]):not([class]) {
+      display: none;
+    }
+  </style>
 </head>
+<body>
 
-<body style="margin: 0px; overflow: hidden;">
+  <!-- Botão para ativar/desativar som -->
+  <button id="toggleSound">Ativar Som 🔊</button>
 
-    <!-- Botão para ativar/desativar o som -->
-    <button id="toggleSound" style="position: fixed; top: 10px; left: 10px; z-index: 100; padding: 10px; font-size: 16px; display: none;">
-        Ativar Som 🔊
-    </button>
+  <a-scene vr-mode-ui="enabled: false;" embedded arjs="debugUIEnabled: false;">
+    <a-assets>
+      <video id="videoAR" src="https://linguanotto.github.io/projetosTECNOVIBE/assets/videoLarissa.mp4"
+             preload="auto" loop playsinline></video>
+    </a-assets>
 
-    <a-scene vr-mode-ui="enabled: false;" embedded arjs="debugUIEnable: false;">
-        <a-assets>
-            <video id="videoAR" src="https://linguanotto.github.io/projetosTECNOVIBE/assets/albumDeFigurinha.mp4" preload="auto" loop playsinline muted></video>
-        </a-assets>
+    <!-- Marcador personalizado -->
+    <a-marker id="customMarker" type="pattern"
+              url="https://linguanotto.github.io/projetosTECNOVIBE/assets/album.patt">
+      <a-video id="videoElement"
+               autoplay
+               rotation="-35 0 0"
+               position="0 0.5 0"
+               width="1.5" height="1"
+               src="#videoAR">
+      </a-video>
+    </a-marker>
 
-        <!-- Carrega o marcador personalizado -->
-        <a-marker id="customMarker" type="pattern" url="https://linguanotto.github.io/projetosTECNOVIBE/assets/album.patt">
-            <a-video id="videoElement" rotation="-35 0 0" position="0 0.5 0" width="1.5" height="1" src="#videoAR"></a-video>
-        </a-marker>
+    <a-entity camera></a-entity>
+  </a-scene>
 
-        <a-entity camera></a-entity>
-    </a-scene>
+  <script>
+    window.onload = function () {
+      const video = document.getElementById("videoAR");
+      const button = document.getElementById("toggleSound");
+      const marker = document.getElementById("customMarker");
 
-    <script>
-        window.onload = function () {
-            const video = document.getElementById("videoAR");
-            const button = document.getElementById("toggleSound");
-            const marker = document.getElementById("customMarker");
+      video.muted = true; // Garante que começa mutado
 
-            // Inicia o vídeo apenas quando o marcador for detectado
-            marker.addEventListener("markerFound", () => {
-                console.log("Marcador detectado! Iniciando vídeo...");
-                video.play();
-                button.style.display = "block"; // Mostra o botão para controle de som
-            });
+      // Quando o marcador é detectado
+      marker.addEventListener("markerFound", () => {
+        video.play();
+        button.style.display = "block";
+      });
 
-            // Pausa o vídeo quando o marcador some
-            marker.addEventListener("markerLost", () => {
-                console.log("Marcador perdido! Pausando vídeo...");
-                video.pause();
-                button.style.display = "none"; // Esconde o botão de som
-            });
+      // Quando o marcador é perdido
+      marker.addEventListener("markerLost", () => {
+        video.pause();
+        button.style.display = "none";
+      });
 
-            // Alternar som ao clicar no botão
-            button.addEventListener("click", () => {
-                video.muted = !video.muted;
-                button.textContent = video.muted ? "Ativar Som 🔊" : "Desativar Som 🔇";
-            });
-        };
-    </script>
+      // Alternar o som
+      button.addEventListener("click", () => {
+        video.muted = !video.muted;
+        button.textContent = video.muted ? "Ativar Som 🔊" : "Desativar Som 🔇";
+      });
+    };
+  </script>
 
 </body>
-
 </html>
